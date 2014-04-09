@@ -1,0 +1,4 @@
+*.pyc
+*.db
+# Redis dump, yo:
+*.rdb

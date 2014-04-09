@@ -1,0 +1,9 @@
+{% if paste %}
+    Date uploaded: {{ paste.upload_date|format_date }}
+{% endif %}
+
+<form method="POST" action=".">
+    <textarea rows="20" cols="80" name="paste" >{{ paste.content }}</textarea><br><br>
+    <input type="submit" value="Submit">
+</form>
+
