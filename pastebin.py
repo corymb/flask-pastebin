@@ -54,13 +54,16 @@ def upload():
         paste = Paste(request.form.get('paste'))
         paste_id = save_paste(paste)
         return redirect(url_for('view_paste', id=paste_id))
-    return render_template('home.html')
+    return render_template('home.html', paste=None)
 
 
-@app.route('/<id>/')
+@app.route('/<id>/', methods=['GET', 'POST'])
 def view_paste(id):
     paste = pickle.loads(r.get(id))
-    assert False, paste
+    if request.method == 'POST':
+        paste = Paste(request.form.get('paste'))
+        paste_id = save_paste(paste)
+
     return render_template('home.html', paste=paste)
 
 
