@@ -24,7 +24,7 @@ def add_suffix(date):
 def format_date(date):
     """ Takes a date object; returns a formatted string (
     complete with suffixes, yo!) """
-    return date.strftime('%A, {S} %B %Y at %H:%M%p').replace(
+    return date.strftime('%A, {S} %B %Y at %I:%M%p').replace(
             '{S}', str(date.day) + add_suffix(date.day))
 
 
