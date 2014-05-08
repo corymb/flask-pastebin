@@ -1,7 +1,12 @@
+# -*- coding:utf-8 -*-
+
 import unittest
 from datetime import datetime
 
-from pastebin import add_suffix, format_date
+import fakeredis
+from mock import patch
+
+from pastebin import add_suffix, format_date, Paste, save_paste
 
 
 class DateTestCase(unittest.TestCase):
@@ -78,6 +83,55 @@ class DateTestCase(unittest.TestCase):
         date = self.create_date(date=1, hour=12)
         assert 'PM' in format_date(date)
 
+
+@patch('pastebin.r', fakeredis.FakeStrictRedis())
+class PasteClassTestCase(unittest.TestCase):
+    """
+    Battery of tests to check the functions surrounding the paste class
+    """
+
+    def setUp(self):
+        self.paste = Paste(content='test')
+
+    def test_generate_digest(self):
+        """ Tests that Paste.generate_digest generates an 8 character string.
+        """
+        assert type(self.paste.generate_digest()) is str
+        assert len(self.paste.generate_digest()) == 8
+
+    def test_pickle_object(self):
+        """ Tests that pickle_object returns a pickled object. """
+        assert type(self.paste.pickle_object()) is str
+
+    def test_pickle_object_content(self):
+        """ Tests that pickle_object returns the correct data. """
+        assert 'test' in self.paste.pickle_object()
+        # assert  self.paste.generate_digest() in self.paste.pickle_object()
+
+    def test_paste_hash(self):
+        """ Tests that the paste's hash doesn't change when looked up. """
+        pass
+
+
+class RedisTestCase(unittest.TestCase):
+    """ Tests Redis CRUD """
+    def test_generate_unique_digest(self):
+        """ Tests that an existing digest cannot be added into Redis. """
+        digest = paste.generate_digest()
+
+
+class PasteBinTestClass(unittest.TestCase):
+    """ Tests for the Paste object. """
+
+
+    def test_save_paste(self):
+        """ Tests that a paste is saved in the DB """
+        pass
+
+
+class BrowserTestCase(unittest.TestCase):
+    """ Tests browser interaction """
+    pass
 
 if __name__ == '__main__':
         unittest.main()
