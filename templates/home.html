@@ -1,9 +1,22 @@
-{% if paste %}
-    Date uploaded: {{ paste.upload_date|format_date }}
-{% endif %}
-
-<form method="POST" action=".">
-    <textarea rows="20" cols="80" name="paste" >{{ paste.content }}</textarea><br><br>
-    <input type="submit" value="Submit">
-</form>
-
+<!doctype html>
+<html>
+<head>
+    <title>Pastebin</title>
+    <link rel=stylesheet type=text/css href="/static/layout.css">
+</head>
+<body>
+    <div class="page">
+        <h1>Pastebin</h1>
+        {% if paste.upload_date %}
+        <div id="modified">Modified: {{ paste.upload_date|format_date }}</div>
+        {% endif %}
+        {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+        <form id="form" method="POST" action=".">
+            <textarea id="paste" name="paste" >{{ paste.content }}</textarea><br><br>
+            <input id="submit" type="submit" value="Submit" align="right">
+        </form>
+    </div>
+</body>
+</html>
