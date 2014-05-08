@@ -83,6 +83,11 @@ class DateTestCase(unittest.TestCase):
         date = self.create_date(date=1, hour=12)
         assert 'PM' in format_date(date)
 
+    def test_12_hour_clock(self):
+        """ Tests that the modified time is in 12 hour format. """
+        date = self.create_date(date=1, hour=13)
+        assert '13' not in format_date(date)
+
 
 @patch('pastebin.r', fakeredis.FakeStrictRedis())
 class PasteClassTestCase(unittest.TestCase):
@@ -117,7 +122,8 @@ class RedisTestCase(unittest.TestCase):
     """ Tests Redis CRUD """
     def test_generate_unique_digest(self):
         """ Tests that an existing digest cannot be added into Redis. """
-        digest = paste.generate_digest()
+        # digest = paste.generate_digest()
+        pass
 
 
 class PasteBinTestClass(unittest.TestCase):
