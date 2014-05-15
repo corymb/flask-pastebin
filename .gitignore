@@ -2,3 +2,5 @@
 *.db
 # Redis dump, yo:
 *.rdb
+# Coverage files:
+.coverage

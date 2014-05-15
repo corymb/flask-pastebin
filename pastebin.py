@@ -35,12 +35,14 @@ class Paste(object):
         self.upload_date = datetime.now()
         self.private = private
 
+    def get_digest(self):
+        """ Generates an 8 character, base 64, alphanumeric and url-safe
+        digest. """
+        return urlsafe_b64encode(urandom(10))[:8]
+
     def generate_digest(self):
-        '''
-        Generates an 8 character, base 64, alphanumeric and url-safe digest.
-        Checks it isn't already being stored in Redis.
-        '''
-        digest = urlsafe_b64encode(urandom(10))[:8]
+        """ Checks it isn't already being stored in Redis. """
+        digest = self.get_digest()
         while r.exists(digest):
             digest = self.generate_digest()
         return digest
@@ -53,6 +55,8 @@ class Paste(object):
 
 
 def save_paste(paste):
+    # TODO: Add error handling for when Redis is down. Use
+    # redis.exceptions.ConnectionError
     if not r.set(paste.id, paste.pickle_object()):
         flash('Something went wrong while saving - please try again later.')
     r.set(paste.id, paste.pickle_object())
