@@ -1,0 +1,14 @@
+Pygments==1.6
+bpython==0.12
+flake8==2.1.0
+ipython==1.1.0
+mccabe==0.2.1
+numpy==1.8.1
+pep8==1.4.6
+pyflakes==0.7.3
+readline==6.2.4.1
+stevedore==0.13
+virtualenv==1.11.1
+virtualenv-clone==0.2.4
+virtualenvwrapper==4.2
+wsgiref==0.1.2
